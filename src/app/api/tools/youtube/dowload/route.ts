@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server"
+import { NextResponse, NextRequest } from "next/server"
 import ytdl from "ytdl-core"
 import ffmpeg from "fluent-ffmpeg"
 import ffmpegPath from "ffmpeg-static"
@@ -6,7 +6,7 @@ import { PassThrough } from "stream"
 
 ffmpeg.setFfmpegPath(ffmpegPath as any)
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   const url = request.nextUrl.searchParams.get("url")
   const type = request.nextUrl.searchParams.get("type") // audio ou vídeo se der tudo certo AKAKKAKAKAK
 
