@@ -18,7 +18,7 @@ export function GlobalSpotlight() {
 
     window.addEventListener("mousemove", move)
     return () => window.removeEventListener("mousemove", move)
-  }, [])
+  }, [mouseX, mouseY])
 
   const background = useTransform(
     [smoothX, smoothY],

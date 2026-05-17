@@ -4,17 +4,22 @@ import { Navbar } from "@/components/layout/navbar"
 import { PageTransition } from "@/components/layout/page-transition"
 import { ScrollProgress } from "@/components/ui/scroll-progress"
 import { CustomCursor } from "@/components/ui/custom-cursor"
+import { PageTracker } from "@/components/analytics/page-tracker"
+import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export const metadata: Metadata = {
   title: {
     default: "Central - Paicheco",
     template: "%s | Central - Paicheco",
   },
-  description: "Hub pessoal acadêmico e profissional",
-  metadataBase: new URL("https://central-paicheco.vercel.app"), // se Deus quiser que vai ficar assim
+  description:
+    "Hub de ferramentas, projetos e experimentos digitais de Guilherme Paicheco.",
+  metadataBase: new URL("https://central-paicheco.vercel.app"),
   openGraph: {
     title: "Central - Paicheco",
-    description: "Hub pessoal acadêmico e profissional",
+    description:
+      "Ferramentas úteis, projetos automatizados do GitHub e experimentos digitais.",
     type: "website",
   },
   twitter: {
@@ -30,11 +35,8 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className="dark">
       <body className="min-h-screen bg-black text-zinc-100 antialiased overflow-x-hidden">
-
-        {/* Fundo sólido */}
         <div className="fixed inset-0 -z-50 bg-black" />
 
-        {/* Grid sutil (mais discreto que antes) */}
         <div
           className="pointer-events-none fixed inset-0 -z-40
           bg-[linear-gradient(to_right,rgba(16,185,129,0.02)_1px,transparent_1px),
@@ -45,13 +47,14 @@ export default function RootLayout({
         <Navbar />
         <ScrollProgress />
         <CustomCursor />
+        <PageTracker />
 
         <main className="pt-16 min-h-screen">
-          <PageTransition>
-            {children}
-          </PageTransition>
+          <PageTransition>{children}</PageTransition>
         </main>
 
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )

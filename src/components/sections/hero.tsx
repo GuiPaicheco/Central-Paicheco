@@ -1,104 +1,96 @@
 "use client"
 
 import { motion } from "framer-motion"
-import Image from "next/image"
 import Link from "next/link"
+import { ArrowRight, Github, Wrench } from "lucide-react"
 
 export function Hero() {
   return (
-    <section className="relative flex min-h-[85vh] items-center">
-      <div className="grid w-full items-center gap-12 md:grid-cols-2">
-
-        {/* TEXTO */}
+    <section className="relative flex min-h-[78vh] items-center py-16">
+      <div className="grid w-full items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
         <div>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-sm font-medium uppercase tracking-[0.24em] text-emerald-400"
+          >
+            Central Paicheco
+          </motion.p>
+
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-tight"
+            transition={{ delay: 0.1, duration: 0.6 }}
+            className="mt-4 max-w-4xl text-4xl font-bold leading-tight tracking-tight text-zinc-100 sm:text-5xl md:text-6xl"
           >
-            <span className="text-emerald-500">
-              Guilherme Paicheco Ferreira
-            </span>
+            Ferramentas úteis, projetos reais e experimentos digitais em um só lugar.
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="mt-6 max-w-xl text-base sm:text-lg text-zinc-400 leading-relaxed"
+            className="mt-6 max-w-2xl text-base leading-relaxed text-zinc-400 sm:text-lg"
           >
-            Estudante de Ciência da Computação no IFMG - Campus Ibirité, técnico em Mecatrônica
-            e servidor público efetivo em Betim. Construindo uma trajetória acadêmica,
-            institucional e tecnológica desde cedo, com foco em desenvolvimento
-            Full Stack e Inteligência Artificial.
+            Um hub público para gerar QR Codes, manipular arquivos, consultar
+            projetos do GitHub e testar utilidades criadas com foco em produtividade.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className="mt-8 flex flex-col sm:flex-row gap-4"
+            transition={{ delay: 0.35, duration: 0.6 }}
+            className="mt-8 flex flex-col gap-3 sm:flex-row"
           >
             <Link
-              href="/repositories"
-              className="rounded-lg bg-emerald-500 px-6 py-3 font-medium text-black transition hover:opacity-90 text-center"
-            >
-              Ver Projetos
-            </Link>
-
-            <Link
               href="/tools"
-              className="rounded-lg border border-emerald-500/40 px-6 py-3 font-medium text-emerald-500 transition hover:bg-emerald-500/10 text-center"
+              className="inline-flex items-center justify-center gap-2 rounded-md bg-emerald-500 px-5 py-3 font-medium text-black transition hover:bg-emerald-400"
             >
-              Minhas Ferramentas
+              Explorar ferramentas <ArrowRight size={18} />
+            </Link>
+            <Link
+              href="/repositories"
+              className="inline-flex items-center justify-center gap-2 rounded-md border border-emerald-500/40 px-5 py-3 font-medium text-emerald-300 transition hover:bg-emerald-500/10"
+            >
+              Ver projetos <Github size={18} />
             </Link>
           </motion.div>
         </div>
 
-        {/* FOTO */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.3, duration: 0.6 }}
-          className="relative mx-auto md:mx-0 w-64 h-64 sm:w-72 sm:h-72"
+          transition={{ delay: 0.25, duration: 0.6 }}
+          className="rounded-lg border border-zinc-800 bg-zinc-950/70 p-5"
         >
-          <div className="absolute inset-0 rounded-2xl bg-emerald-500/10 blur-2xl" />
+          <div className="mb-5 flex items-center gap-3">
+            <div className="flex size-10 items-center justify-center rounded-md bg-emerald-500 text-black">
+              <Wrench size={20} />
+            </div>
+            <div>
+              <p className="font-medium text-zinc-100">Kit público inicial</p>
+              <p className="text-sm text-zinc-500">rápido, leve e direto no navegador</p>
+            </div>
+          </div>
 
-          <Image
-            src="/Paicheco.jpg"
-            alt="Guilherme Paicheco Ferreira"
-            fill
-            className="relative rounded-2xl object-cover border border-emerald-500/30 shadow-xl"
-            priority
-          />
+          <div className="space-y-3">
+            {[
+              "QR Code com PNG, SVG, cores e margem",
+              "PDF a partir de múltiplas imagens",
+              "Remoção de fundo com login e limite de uso",
+              "YouTube seguro: metadata, thumbnail e timestamps",
+            ].map((item) => (
+              <div
+                key={item}
+                className="rounded-md border border-zinc-800 bg-black/40 px-4 py-3 text-sm text-zinc-300"
+              >
+                {item}
+              </div>
+            ))}
+          </div>
         </motion.div>
-
       </div>
-      {/* Scroll Indicator */}
-        <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1, duration: 0.6 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
-        >
-        <span className="text-xs tracking-widest text-zinc-500 uppercase">
-            Role para explorar
-        </span>
-
-        <div className="relative h-12 w-[2px] bg-zinc-800 overflow-hidden">
-            <motion.div
-            animate={{ y: ["-100%", "100%"] }}
-            transition={{
-                repeat: Infinity,
-                duration: 1.5,
-                ease: "linear",
-            }}
-            className="absolute top-0 h-6 w-full bg-emerald-500"
-            />
-        </div>
-        </motion.div>
-        <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-b from-transparent to-black pointer-events-none" />
     </section>
   )
 }

@@ -2,60 +2,93 @@
 
 import Link from "next/link"
 import { motion } from "framer-motion"
+import { ExternalLink, GitFork, Star } from "lucide-react"
+import type { GitHubRepository } from "@/lib/github"
 
 interface RepositoryCardProps {
-  name: string
-  description: string
-  language: string
-  url: string
+  repository: GitHubRepository
+  featured?: boolean
 }
 
-export function RepositoryCard({
-  name,
-  description,
-  language,
-  url,
-}: RepositoryCardProps) {
+const formatter = new Intl.DateTimeFormat("pt-BR", {
+  day: "2-digit",
+  month: "short",
+  year: "numeric",
+})
+
+export function RepositoryCard({ repository, featured }: RepositoryCardProps) {
+  const targetUrl = repository.homepage || repository.html_url
+
   return (
-    <motion.div
-      whileHover={{ y: -6 }}
+    <motion.article
+      whileHover={{ y: -4 }}
       transition={{ type: "spring", stiffness: 260, damping: 18 }}
-      className="w-full"
+      className="h-full"
     >
-      <Link
-        href={url}
-        target="_blank"
-        className="
-          relative flex flex-col gap-4
-          rounded-2xl
-          border border-zinc-800
-          bg-zinc-900/60
-          p-6
-          transition-all duration-300
-          hover:border-emerald-500/40
-          hover:bg-zinc-900
-        "
-      >
-        <div>
-          <h3 className="text-lg font-semibold text-zinc-200">
-            {name}
-          </h3>
-
-          <p className="text-sm text-zinc-400 mt-2">
-            {description}
-          </p>
+      <div className="flex h-full flex-col rounded-lg border border-zinc-800 bg-zinc-900/60 p-5 transition hover:border-emerald-500/40 hover:bg-zinc-900">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <div className="flex flex-wrap items-center gap-2">
+              <h3 className="text-lg font-semibold text-zinc-100">
+                {repository.name}
+              </h3>
+              {featured && (
+                <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-xs text-emerald-300">
+                  destaque
+                </span>
+              )}
+            </div>
+            <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-zinc-400">
+              {repository.description || "Projeto público no GitHub."}
+            </p>
+          </div>
         </div>
 
-        <div className="flex items-center justify-between mt-4">
-          <span className="text-xs px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-            {language}
-          </span>
+        {repository.topics.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-2">
+            {repository.topics.slice(0, 4).map((topic) => (
+              <span
+                key={topic}
+                className="rounded-md bg-zinc-800 px-2 py-1 text-xs text-zinc-300"
+              >
+                {topic}
+              </span>
+            ))}
+          </div>
+        )}
 
-          <span className="text-xs text-zinc-500">
-            Ver no GitHub →
-          </span>
+        <div className="mt-auto pt-5">
+          <div className="mb-4 flex flex-wrap items-center gap-3 text-xs text-zinc-500">
+            <span>{repository.language || "Sem linguagem"}</span>
+            <span className="inline-flex items-center gap-1">
+              <Star size={13} /> {repository.stargazers_count}
+            </span>
+            <span className="inline-flex items-center gap-1">
+              <GitFork size={13} /> {repository.forks_count}
+            </span>
+            <span>Atualizado em {formatter.format(new Date(repository.updated_at))}</span>
+          </div>
+
+          <div className="flex gap-3">
+            <Link
+              href={repository.html_url}
+              target="_blank"
+              className="inline-flex items-center gap-2 rounded-md border border-zinc-700 px-3 py-2 text-sm text-zinc-200 transition hover:border-emerald-500/60 hover:text-emerald-300"
+            >
+              GitHub <ExternalLink size={14} />
+            </Link>
+            {repository.homepage && (
+              <Link
+                href={targetUrl}
+                target="_blank"
+                className="inline-flex items-center gap-2 rounded-md bg-emerald-500 px-3 py-2 text-sm font-medium text-black transition hover:bg-emerald-400"
+              >
+                Abrir <ExternalLink size={14} />
+              </Link>
+            )}
+          </div>
         </div>
-      </Link>
-    </motion.div>
+      </div>
+    </motion.article>
   )
 }

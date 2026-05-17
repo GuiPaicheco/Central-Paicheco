@@ -17,7 +17,7 @@ export function CustomCursor() {
     const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0
 
     if (isFinePointer && !isTouch) {
-      setEnabled(true)
+      queueMicrotask(() => setEnabled(true))
     }
 
     const move = (e: MouseEvent) => {
@@ -27,7 +27,7 @@ export function CustomCursor() {
 
     window.addEventListener("mousemove", move)
     return () => window.removeEventListener("mousemove", move)
-  }, [])
+  }, [x, y])
 
   if (!enabled) return null
 
