@@ -19,6 +19,7 @@ Crie `.env.local` com:
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
 SUPABASE_SERVICE_ROLE_KEY=
 ADMIN_EMAILS=seu-email@exemplo.com
 GITHUB_USERNAME=GuiPaicheco
@@ -26,7 +27,9 @@ GITHUB_TOKEN=
 REMOVE_BG_API_KEY=
 ```
 
-`GITHUB_TOKEN` é opcional, mas recomendado para evitar limite baixo da API.
+Use `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` para projetos novos. A variável
+`NEXT_PUBLIC_SUPABASE_ANON_KEY` continua aceita por compatibilidade. `GITHUB_TOKEN`
+é opcional, mas recomendado para evitar limite baixo da API.
 
 ## Supabase
 

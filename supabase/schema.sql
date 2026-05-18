@@ -46,29 +46,55 @@ drop policy if exists "profiles_select_own" on public.profiles;
 create policy "profiles_select_own"
 on public.profiles for select
 to authenticated
-using (auth.uid() = id);
+using ((select auth.uid()) = id);
 
 drop policy if exists "profiles_update_own" on public.profiles;
 create policy "profiles_update_own"
 on public.profiles for update
 to authenticated
-using (auth.uid() = id)
-with check (auth.uid() = id);
+using ((select auth.uid()) = id)
+with check ((select auth.uid()) = id);
+
+drop policy if exists "page_events_no_client_access" on public.page_events;
+create policy "page_events_no_client_access"
+on public.page_events
+as restrictive
+for all
+to anon, authenticated
+using (false)
+with check (false);
 
 drop policy if exists "tool_events_select_own" on public.tool_events;
 create policy "tool_events_select_own"
 on public.tool_events for select
 to authenticated
-using (auth.uid() = user_id);
+using ((select auth.uid()) = user_id);
 
 drop policy if exists "tool_limits_select_own" on public.tool_limits;
 create policy "tool_limits_select_own"
 on public.tool_limits for select
 to authenticated
-using (auth.uid() = user_id);
+using ((select auth.uid()) = user_id);
+
+revoke all on table public.profiles from anon, authenticated;
+revoke all on table public.page_events from anon, authenticated;
+revoke all on table public.tool_events from anon, authenticated;
+revoke all on table public.tool_limits from anon, authenticated;
+
+grant select, update on table public.profiles to authenticated;
+grant select on table public.tool_events to authenticated;
+grant select on table public.tool_limits to authenticated;
+
+grant all on table public.profiles to service_role;
+grant all on table public.page_events to service_role;
+grant all on table public.tool_events to service_role;
+grant all on table public.tool_limits to service_role;
 
 create index if not exists page_events_created_at_idx on public.page_events (created_at desc);
 create index if not exists page_events_path_idx on public.page_events (path);
+create index if not exists page_events_user_id_idx on public.page_events (user_id);
 create index if not exists tool_events_created_at_idx on public.tool_events (created_at desc);
 create index if not exists tool_events_tool_idx on public.tool_events (tool);
+create index if not exists tool_events_user_id_idx on public.tool_events (user_id);
+create index if not exists tool_limits_user_id_idx on public.tool_limits (user_id);
 create index if not exists profiles_created_at_idx on public.profiles (created_at desc);
