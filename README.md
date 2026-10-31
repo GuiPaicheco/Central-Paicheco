@@ -53,3 +53,35 @@ aparecido em commit público ou deploy compartilhado, trate como comprometida.
 npm run lint
 npm run build
 ```
+
+---
+
+## Guia rápido do repositório
+
+Hub de ferramentas e projetos com Next.js, autenticação e integrações para produtividade.
+
+**Contexto:** Projeto pessoal.
+
+### Ambiente de desenvolvimento
+
+Requer Node.js e npm. Instale as dependências e inicie o ambiente de desenvolvimento:
+
+```bash
+git clone https://github.com/GuiPaicheco/Central-Paicheco.git
+cd Central-Paicheco
+npm install
+npm run dev
+```
+
+Consulte o endereço informado pelo servidor no terminal.
+
+| Script | Comando configurado |
+| --- | --- |
+| `npm run dev` | `next dev` |
+| `npm run build` | `next build` |
+| `npm run start` | `next start` |
+| `npm run lint` | `eslint` |
+
+Se o projeto usar serviços externos, configure suas próprias variáveis de ambiente antes de executar os fluxos integrados. A instalação das dependências não configura banco, autenticação ou serviços remotos.
+
+Consulte os requisitos e as limitações nas seções acima antes de usar o sistema. Esta atualização revisa a documentação; não representa uma nova validação de execução ou de segurança.
